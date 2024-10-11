@@ -3,19 +3,28 @@ import styled from 'styled-components'
 import { useState } from 'react';
 import Logo from '../assets/Logo';
 import { Link, NavLink } from 'react-router-dom';
-const Section=styled.section`
-    width:100vw;
-    background-color: #fff;
-    position: sticky;
-`
+// const Section=styled.section`
+//     width:100vw;
+//     background-color: rgb(201, 233, 236);
+//     position: sticky;
+//     padding-top:1.5rem; //new
+// `
 const NavBar=styled.nav`
+    position: sticky;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 85%;
-    height: 5rem;
+    width: 90%;
+    height: 6rem;
     margin: 0 auto;
-    border-bottom: 1px solid lightgray; 
+    backdrop-filter: blur(15px);
+    margin-top:1.5rem; 
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, .25);
+    background-color: rgba(255, 255, 255, .45); //new
+    border-radius: 20px; //new
+    padding: 10px;  //new
+    border: 1px solid rgba(255, 255, 255, .25);
+    /* border-bottom: 1px solid lightgray;  */
     @media (max-width: 790px) { 
       height:${props=>props.click?'13rem':'5rem'};
   }
@@ -35,6 +44,7 @@ const NavBar=styled.nav`
 const Menu = styled.ul`
   list-style: none;
   font-weight: bold;
+  
   display: flex;
   @media (max-width: 790px) {
     flex-direction: column;
@@ -51,7 +61,7 @@ const Menu = styled.ul`
 
 
 const MenuItem = styled.li`
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     margin: 0 1.2rem;
     color: #202020;
     text-decoration: none;
@@ -82,6 +92,7 @@ const MenuItem = styled.li`
 
 const SNavLink=styled(NavLink)`
     all: unset;
+    
 `;
 
 const Hamburger = styled.div`
@@ -123,13 +134,31 @@ const Hamburger = styled.div`
   }
 `;
 
-const Btn=styled.button``;
+const Btn=styled.button`
+  background-color: transparent; //new;
+  height:3.5rem;
+  border-radius:20px;
+  width:10rem;
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: bold;
+  border:3px solid #4ccdc3;
+
+  cursor:pointer;
+  &:hover{
+    background-color: #4ccdc3;
+    text-shadow:.5px .5px black;
+    color:white;
+    transform: scale(1.1);
+    transition: all 0.2s ease;
+  }
+`;
 export const Navbar=()=>{
     const [click, setClick] = useState(false);
 
     return(
         <>
-        <Section>
+        {/* <Section> */}
             <NavBar click={click}>
                 <SNavLink to="./">
                 <Logo/>
@@ -150,7 +179,7 @@ export const Navbar=()=>{
                 </div>     
             </NavBar>
 
-        </Section>
+        {/* </Section> */}
         </>
     );
 }

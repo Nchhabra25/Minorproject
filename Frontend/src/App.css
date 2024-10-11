@@ -6,3 +6,17 @@
 html{
     font-size: 62.5%;
 }
+body{
+    /* background: linear-gradient(130deg, #d299c2, #fef9d7);
+    background-size: 200% 200%;
+
+    Animation: Animation 5s ease infinite;
+}
+
+@keyframes Animation {
+    0%{background-position:10% 30%}
+    50%{background-position:91% 100%}
+    100%{background-position:10% 30%} */
+    background-color: #f0f4f8;
+}
+

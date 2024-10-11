@@ -5,11 +5,11 @@ import styled from 'styled-components'
 const LogoText=styled.h1`
     font-family: 'Akaya Telivigala', cursive;
     font-size: 4em;
-    color: #ffb5b5;
-    text-shadow:2px 3px 3px #000;
+    color: #0d4e6f;
+    text-shadow:2px 3px 3px powderblue;
     transition: all 0.2s ease;
     &:hover{
-        transform: scale(1.1);
+        transform: scale(1.02);
     }
 `
 const SLink=styled(Link)`
