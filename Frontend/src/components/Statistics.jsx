@@ -1,7 +1,8 @@
 // src/components/StatisticsClone.js
 import React from 'react';
 import styled from 'styled-components';
-
+import { motion } from 'framer-motion';
+import { useMotion } from '../Motion'; 
 // Styled Components
 const Container = styled.div`
   display: flex;
@@ -9,23 +10,22 @@ const Container = styled.div`
   justify-content: space-between;
   padding: 2rem;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: -2rem auto;
+  width: 95%;
 `;
 
-const Card = styled.div`
+const Card = styled(motion.div)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: #fff;
-  border-radius: 10px;
+  background-color:  hsla(346.85, 100%, 85.69%, 0.65);
+  border-radius: 30px;
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, .25);
   padding: 1.5rem;
   text-align: left;
   flex: 1 1 calc(50% - 1rem); /* Two cards per row */
-  max-width: 48%;
+  max-width: 46%;
   margin-bottom: 2rem;
-  box-shadow: 0 0 10px 1px rgba(0, 0, 0, .25);
-  background-color: rgba(255, 255, 255, .45);
-  backdrop-filter: blur(15px);
   min-height: 250px;
 
   /* Media query to make cards stack on smaller screens */
@@ -35,21 +35,22 @@ const Card = styled.div`
   }
 `;
 
-const Title = styled.h3`
+const Title = styled(motion.h3)`
   text-align: center;
   font-size: 3rem;
-  color: #4ccdc3;
+  text-shadow: 1px 0 0 #f0f0f0;
+  color: #5D3FD3;
   margin-bottom: 1rem;
 `;
 
-const Subtitle = styled.p`
+const Subtitle = styled(motion.p)`
   text-align: center;
   font-size: 2rem;
-  color: #666;
+  color: #202020;
   margin-bottom: 1rem;
 `;
 
-const TagWrapper = styled.div`
+const TagWrapper = styled(motion.div)`
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
@@ -57,20 +58,23 @@ const TagWrapper = styled.div`
 `;
 
 const Tag = styled.span`
-  background-color: #edf7f7;
+  background-color: #bcf9f9;
   text-align: center;
-  color: #5c7275;
+  color: #3e4a4b;
   padding: 0.3rem 1rem;
   border-radius: 20px;
-  font-size: 1.5rem;
+  font-size: 1.7rem;
 `;
 
-// Main Component
 export const Statistics = () => {
+  const motionVariants = useMotion();
   return (
     <Container>
-      {/* Card 1 */}
-      <Card>
+      <Card
+      variants={motionVariants.fadeInLeftVariant}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: false }}>
         <Title>92% users feel better after their first conversation</Title>
         <Subtitle>For 40% of cases that’s the only help needed.</Subtitle>
         <TagWrapper>
@@ -85,22 +89,31 @@ export const Statistics = () => {
         </TagWrapper>
       </Card>
 
-      {/* Card 2 */}
-      <Card>
+      <Card
+      variants={motionVariants.fadeInRightVariant}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: false }}>
         <Title>Available 24/7</Title>
         <Subtitle>No appointments or waiting rooms. Instant replies even on weekends and at 4 A.M.</Subtitle>
         <Subtitle><strong>34%</strong> of sessions happen after midnight, when no traditional services are available.</Subtitle>
       </Card>
 
-      {/* Card 3 */}
-      <Card>
+      <Card
+      variants={motionVariants.fadeInLeftVariant}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: false }}>
         <Title>No stigma. Completely anonymous.</Title>
         <Subtitle>When talking to AI, people are not afraid of being judged and address their problems earlier.</Subtitle>
         <Subtitle><strong>21%</strong> of users said they would not have anyone to talk to except AI.</Subtitle>
       </Card>
 
-      {/* Card 4 */}
-      <Card>
+      <Card
+      variants={motionVariants.fadeInRightVariant}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: false }}>
         <Title>Safe to Use</Title>
         <Subtitle>AI detects when a person needs more than a chatbot and redirects them to appropriate resources, such as a therapist or hotlines.</Subtitle>
         <Subtitle>Unlike other chatbots, <strong>MannMitra</strong> is trained on thousands of "clinical hours" to follow evidence-based approach</Subtitle>

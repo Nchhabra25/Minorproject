@@ -4,13 +4,21 @@ import { Piedata } from '../assets/Data';
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from 'chart.js'; 
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
+import Img from "../assets/Images/sadgirl2.png"
+import { motion } from 'framer-motion';
+import { useMotion } from '../Motion'; 
 
-const Container=styled.div`
-    width:75%;
+
+const Container=styled(motion.div)`
+    width:85%;
     min-height:80vh;
-    margin:0 auto;
+    margin:5rem auto;
     display:flex;
     justify-content:center;
+    background-color: #7fe6dd;
+    border-radius: 30px;
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, .25);
+    padding: 0 20px;
     gap: 6rem;
     align-items:center;
     .text{
@@ -39,19 +47,20 @@ const Box = styled.div`
         margin-left: auto;
     }
 `;
-const Heading=styled.h1`
+const Heading=styled(motion.h1)`
     font-size: 44px;
     text-align: center;
     font-weight: bold;
-    color: #202020;
+    color: #fe5748;
+    text-shadow: 0 0 1px #fff;
 `
-const Subtitle=styled.h2`
+const Subtitle=styled(motion.h2)`
         text-align: center;
         font-size: 2rem;
-        color: #666;
+        color: #202020;
         margin-bottom: 1rem;
     `
-    const TagWrapper = styled.div`
+    const TagWrapper = styled(motion.div)`
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
@@ -59,49 +68,65 @@ const Subtitle=styled.h2`
   `;
   
   const Tag = styled.span`
-    background-color: #d1f5f5;
+    background-color: #602aa2;
     text-align: center;
-    color: #5c7275;
+    color: #fff;
     padding: 0.3rem 1rem;
     border-radius: 20px;
     font-size: 2rem;
   `;
 
-const config = {
-    labels: ['Anxiety', 'Stress', 'ADHD', 'Depression', 'OCD', 'Loneliness', 'Self-esteem issues'],
-    datasets: [
-      {
-        label: 'Mental Health Disorders',
-        data: [20, 30, 15, 25, 10, 12, 18], // Example data values
-        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#d41717'],
-        hoverOffset: 4
-      }
-    ],
-  };
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        display: false, // Disable the legend
-      },
-      title: {
-        display: true,
-        text: 'Mental Health Disorders Pie Chart',
-      },
-    },
-  };
+  const ImageWrapper = styled(motion.div)`
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  img {
+    width: 100%;
+    max-width: 400px;
+    height: 50rem;
+    border-radius: 10px;
+  }
+`;
   
 export const Features = () =>{
+  const motionVariants=useMotion();
   return(
     <>
-      <Container>
-        <Box><Pie data={config} options={options}/></Box>
+      <Container
+      variants={motionVariants.fadeInBottomVariant}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: false }} >
+        <Box>
+          {/* <Pie data={config} options={options}/> */}
+          <ImageWrapper
+          variants={motionVariants.fadeInLeftVariant}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false }} >
+          <img src={Img} alt="Sad girl" />
+        </ImageWrapper>
+        </Box>
         <Box className='text'>
-        <Heading>
-            We interviewed 1000 people regarding mental health disorders
+        <Heading
+        variants={motionVariants.fadeInRightVariant}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false }} >
+            1 in 8 people suffer from Mental Health Issues
         </Heading>
-        <Subtitle>A majority of people suffered from several mental health disorders like</Subtitle>
-        <TagWrapper>
+        <Subtitle
+        variants={motionVariants.fadeInRightVariant}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false }} >That's 970 million people. That's too many people. MannMitra can conduct hyper-realistic therapy sessions to help you combat problems like</Subtitle>
+        <TagWrapper
+        variants={motionVariants.fadeInRightVariant}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false }} >
           <Tag>Anxiety</Tag>
           <Tag>Stress</Tag>
           <Tag>ADHD</Tag>

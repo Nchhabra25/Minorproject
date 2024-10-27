@@ -1,26 +1,31 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import {useNavigate} from 'react-router-dom'
+import {useAuth} from '../Context'
+import { useMotion } from '../Motion';
+import { motion } from 'framer-motion';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 // Styled Components
 const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f0f4f8;
 `;
 
-const Form = styled.form`
+const Form = styled(motion.form)`
   background-color: #fff;
   padding: 2rem;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   max-width: 400px;
   width: 100%;
   text-align: center;
 `;
 
-const Title = styled.h2`
+const Title = styled.h1`
   margin-bottom: 1rem;
   color: #4ccdc3;
 `;
@@ -41,8 +46,8 @@ const Input = styled.input`
     outline: none;
     border-color: #4ccdc3;
   
-  & + span { /* Target the icon on input focus */
-      color: #4ccdc3; /* Change icon color when input is focused */
+  & + span { 
+      color: #4ccdc3; 
     }}
 `;
 
@@ -128,6 +133,10 @@ export const Register = () => {
     mentalHealthStatus: '',
     age:'' 
   });
+
+  const Navigate=useNavigate();
+  const {StoreTokeninLS}= useAuth()
+
   const [errors, setErrors] = useState({});
 
   const validate = () => {
@@ -144,42 +153,39 @@ export const Register = () => {
     return validationErrors;
   };
 
-  const Navigate=useNavigate()
   const handleSubmit = async(e) => {  
     e.preventDefault();
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
     } else {
-      try{
-        console.log(formData)
-        const response=await fetch('http://localhost:3000/register',{
-        method:"POST",
-        headers:{
-          "Content-Type":"application/json",
-        },
-        body:JSON.stringify(formData)
-      })
-      if (response.ok) {
-        alert('Account created successfully!');
-        setErrors({});
-        Navigate("/login")
-      } else {
-        const errorMsg = await response.text(); // This will give you the error message from the backend.
-        console.error("Server error:", errorMsg);
-        setErrors({ form: errorMsg });
-      }}
-      catch(error){
-        console.log(error);
+      try {
+        const response = await fetch('http://localhost:3000/register', {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData)
+        });
+        if (response.ok) {
+          const res_data = await response.json();
+          StoreTokeninLS(res_data.token);
+          toast.success("Account created successfully!", { position: "top-center" });
+          setErrors({});
+          Navigate("/login");
+        } else {
+          const errorMsg = await response.text();
+          toast.error(`Error: ${errorMsg}`, { position: "top-center" });
+          setErrors({ form: errorMsg });
+        }
+      } catch (error) {
+        toast.error("Network error. Please try again.", { position: "top-center" });
       }
     }
   };
 
-  const capitalizeFirstLetter = (string) => {
-    if (typeof string !== 'string') return ''; // Check if the input is a string
-    return string.charAt(0).toUpperCase() + string.slice(1); // Capitalize first letter
-};
 
+const motionVariants=useMotion();
 
 const handleChange = (e) => {
   const name = e.target.name;
@@ -187,7 +193,7 @@ const handleChange = (e) => {
 
   
   if (name === 'phone' || name === 'age') {
-      value = Number(value); // Convert to number
+      value = Number(value); // Convert to number to avoid db error
   }
 
   setFormData({
@@ -198,23 +204,15 @@ const handleChange = (e) => {
 
   return (
     <Container>
-      <Form onSubmit={handleSubmit}>
+       <ToastContainer />
+      <Form onSubmit={handleSubmit}
+      variants={motionVariants.fadeInBottomVariant}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: false }}>
         <Title>Sign Up</Title>
 
-        {/* Name Input
-        <InputWrapper>
-          <Input
-            type="text"
-            placeholder="Name"
-            name="username"
-            value={formData.name}
-            onChange={handleChange}
-          />
-        <Icon><ion-icon name="person-outline"></ion-icon></Icon>
-          {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
-        </InputWrapper> */}
-
-        {/* Username Input */}
+       {/* Username Input */}
         <InputWrapper>
           <Input
             type="text"

@@ -1,12 +1,23 @@
 import React from "react";
 import styled from "styled-components";
-const Container=styled.div`
-    width:75%;
-    min-height:80vh;
-    margin:0 auto;
+import { motion } from 'framer-motion';
+import { useMotion } from '../Motion'; 
+import { Demotext } from "./Demotext";
+import { useAuth } from "../Context";
+
+const Container=styled(motion.div)`
+    width:85%;
+    min-height:73vh;
+    margin:4rem auto;
+    padding: 20px;
+    border-radius: 30px;
+    background-color:  #cbc5f3;
+    border-radius: 30px;
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, .25);
     display:flex;
-    justify-content:center;
+    justify-content:space-between;
     align-items:center;
+    gap: 50px;
     .text{
       @media (max-width: 575px) {
       }
@@ -34,42 +45,63 @@ const Box = styled.div`
         margin-left: auto;
     }
 `;
-const Heading=styled.h1`
+const Heading=styled(motion.h1)`
     font-size: 44px;
     font-weight: bold;
     color: #202020;
+    text-shadow: 0 0 4px #fff;
+    
 `
-const Btn=styled.button`
-  background-color: transparent; //new;
+const Btn=styled(motion.button)`
   height:5rem;
   border-radius:10px;
   text-align: center;
   padding: 1.2rem;
+  color:white;
   font-size: 2rem;
   font-weight: bold;
-  border:3px solid #4ccdc3;
-
+  border:3px solid #FF6F61;
+  background-color: #FF6F61;
+    a{
+      all: unset;
+    }
   cursor:pointer;
   &:hover{
-    background-color: #4ccdc3;
+    background-color: transparent;
     text-shadow:.5px .5px black;
-    color:white;
+    color:black;
     transform: scale(1.1);
     transition: all 0.2s ease;
   }
 `;
 
 export const Hero = () => {
+  const motionVariants = useMotion();
+  const {isLoggedIn}=useAuth();
   return (
-    <Container>
+    <Container
+    variants={motionVariants.fadeInBottomVariant}
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: false }}>
         <Box className='text'>
-        <Heading>
+        <Heading
+        variants={motionVariants.fadeInLeftVariant}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false }}>
             The artificial intelligence that works like a Therapist
         </Heading>
-        <Btn>Talk to Us</Btn>
+        <Btn
+        variants={motionVariants.fadeInLeftVariant}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false }}>
+          <a href={isLoggedIn?'./chat':'./login'}>
+          Talk to Us</a></Btn>
         </Box>
         <Box>
-           
+           <Demotext/>
         </Box>
     </Container>
   )

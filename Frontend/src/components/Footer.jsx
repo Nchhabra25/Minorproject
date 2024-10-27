@@ -21,7 +21,6 @@ const Href=styled(Link)`
 export const Footer = () => {
   return (
     <Container>
-      <Title><Href to={"/team"}>Meet the developers</Href></Title>
       <Title><Href to={"https://github.com/codermilind-op/MannMitra"}>Visit the Github Repository</Href></Title>
     </Container>
   )

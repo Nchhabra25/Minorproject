@@ -1,30 +1,58 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import styled from 'styled-components'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
-const LogoText=styled.h1`
-    font-family: 'Akaya Telivigala', cursive;
-    font-size: 4em;
-    color: #0d4e6f;
-    text-shadow:2px 3px 3px powderblue;
-    transition: all 0.2s ease;
-    &:hover{
-        transform: scale(1.02);
-    }
-`
-const SLink=styled(Link)`
+const LogoText = styled.span`
+   font-family: "Playfair Display", serif;
+   font-style: normal;
+   font-size: 4em;
+   color: #602aa2;
+   text-shadow: 0 0 4px #fff;
+   font-weight: bold;
+   transition: all 0.2s ease;
+   position: relative;
+   bottom: 10px;
+   &:hover {
+       transform: scale(1.02);
+   }
+   @media (max-width: 450px) {
+    font-size: 2.5rem;
+    margin-top: 5px;
+    margin-right: 2rem;
+  }
+`;
+
+const SLink = styled(Link)`
     all: unset;
 `;
+
+const Icon = styled.span`
+   font-size: 1.5em;
+   color: #602aa2;
+   margin-left: 10px;
+   text-shadow: 0 0 4px #fff;
+
+   // Additional hover styling for the icon
+   &:hover {
+       color: #4ccdc3;
+   }
+`;
+
 const Logo = () => {
   return (
     <>
       <LogoText>
         <SLink to='/'>
-        MannMitra.
+          MannMitra
+          <Icon className="icon">
+            <box-icon
+            color="#602aa2" size="lg"
+             type='solid' name='donate-heart'></box-icon>
+          </Icon>
         </SLink>
       </LogoText>
     </>
-  )
-}
+  );
+};
 
-export default Logo
+export default Logo;

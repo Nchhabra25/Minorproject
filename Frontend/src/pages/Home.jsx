@@ -4,42 +4,45 @@ import { Statistics } from '../components/Statistics'
 import { Reviews } from '../components/Reviews'
 import styled from 'styled-components'
 import { Features } from '../components/Features'
-const Heading=styled.h1`
-  margin-top: 3rem;
+import { motion } from 'framer-motion';
+import { useMotion } from '../Motion'
+import { useAuth } from '../Context';
+
+const Heading=styled(motion.h1)`
     font-size: 44px;
     text-align: center;
     font-weight: bold;
     color: #202020;
 `
-const Subtitle=styled.h2`
-        margin: 3rem;
+const Subtitle=styled(motion.h2)`
+  margin-top: 1rem;
         text-align: center;
-        font-size: 2rem;
+        font-size: 2.5rem;
         color: #666;
         margin-bottom: 1rem;
     `
-const Btn=styled.button`
+const Btn=styled(motion.button)`
 background-color: transparent; //new;
 height:5rem;
 border-radius:10px;
-margin-top: 3rem;
+margin-top: 1rem;
 text-align: center;
 padding: 1.2rem;
 font-size: 2rem;
 font-weight: bold;
-border:3px solid #4ccdc3;
+border:3px solid #FF6F61;
+  background-color: #FF6F61;
 
 cursor:pointer;
 &:hover{
-  background-color: #4ccdc3;
+  background-color: transparent;
   text-shadow:.5px .5px black;
-  color:white;
   transform: scale(1.1);
   transition: all 0.2s ease;
 }
 `;
 const Container = styled.div`
-  width:50%;
+  width:60%;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -55,8 +58,13 @@ const Container = styled.div`
       margin: auto;
     }
 `;
+const A=styled.a`
+  all: unset;
+`
 
 export const Home = () => {
+  const { isLoggedIn } = useAuth(); 
+  const motionVariants=useMotion();
   return (
     <>
       <Hero/>
@@ -64,9 +72,21 @@ export const Home = () => {
       <Reviews/>
       <Features/>
       <Container>
-    <Heading>So what are you waiting for?</Heading>
-    <Subtitle>Start your journey towards better mental health today</Subtitle>
-    <Btn>Chat with us now</Btn>
+    <Heading
+    variants={motionVariants.fadeInLeftVariant}
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: false }}>So what are you waiting for?</Heading>
+    <Subtitle
+    variants={motionVariants.fadeInRightVariant}
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: false }}>Start your journey towards better mental health today</Subtitle>
+    <Btn
+    variants={motionVariants.fadeInBottomVariant}
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: false }}><A href={isLoggedIn?'./chat':'./login'}>Chat with us now</A></Btn>
     </Container>
     </>
   )

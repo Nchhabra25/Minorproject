@@ -1,7 +1,12 @@
-// src/components/Login.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../Context';
+import { motion } from 'framer-motion';
+import { useMotion } from '../Motion';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 // Styled components
 const Container = styled.div`
   display: flex;
@@ -11,13 +16,13 @@ const Container = styled.div`
   margin: auto;
 `;
 
-const Form = styled.form`
+const Form = styled(motion.form)`
   background-color: #fff;
   padding: 2rem;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   max-width: 300px;
-  width: 80%;
+  width: 100%;
   text-align: center;
 `;
 
@@ -41,6 +46,9 @@ const Input = styled.input`
   &:focus {
     outline: none;
     border-color: #4ccdc3;
+  & + span { 
+    color: #4ccdc3; 
+  }
   }
 `;
 
@@ -86,7 +94,6 @@ const LoginLink = styled.div`
   }
 `;
 
-// Validation and Form Component
 export const Login = () => {
   const [user, setUser] = useState({
     email: '',
@@ -94,7 +101,13 @@ export const Login = () => {
   });
   const [errors, setErrors] = useState({});
 
-  const Navigate=useNavigate()
+  const navigate = useNavigate();
+  const { StoreToken } = useAuth();
+
+  useEffect(() => {
+    // Show a toast when the page is first loaded
+    toast.info('You can use the email Johndoe@johndoe.com and password johndoe to login', { autoClose: 10000 }); 
+  }, []);
 
   const validate = () => {
     let validationErrors = {};
@@ -106,7 +119,7 @@ export const Login = () => {
 
     if (!user.password) {
       validationErrors.password = 'Password is required';
-    } else if (user.password.length < 6) {
+    } else if (user.password.length < 5) {
       validationErrors.password = 'Password must be at least 6 characters';
     }
 
@@ -129,7 +142,7 @@ export const Login = () => {
       setErrors(validationErrors);
     } else {
       try {
-        const response = await fetch('http://localhost:3000/login', { // Ensure you have the correct endpoint
+        const response = await fetch('http://localhost:3000/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -138,32 +151,46 @@ export const Login = () => {
         });
         
         if (response.ok) {
-          alert('Login Successful!');
+          const res_data = await response.json();
+          console.log(res_data);
+          StoreToken(res_data.userId);
+
+          toast.success('Login Successful!', { autoClose: false });
           setErrors({});
-          Navigate("/chat")
-          
+          navigate("/chat");
         } else {
           const errorMsg = await response.text();
           setErrors({ form: errorMsg });
+          toast.error(errorMsg, { autoClose: false });
         }
       } catch (error) {
         console.log(error);
+        toast.error('An error occurred. Please try again.', { autoClose: false });
       }
     }
   };
 
+  const motionVariants = useMotion();
+
   return (
     <Container>
-      <Form onSubmit={handleSubmit}>
-        <Title>Sign In</Title>
+      <ToastContainer position="top-center" />
+      <Form
+        onSubmit={handleSubmit}
+        variants={motionVariants.fadeInBottomVariant}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false }}
+      >
+        <Title>Log In</Title>
 
         <InputWrapper>
           <Input
             type="text"
-            name="email" // Ensure the name attribute is set
+            name="email"
             placeholder="E-mail"
             value={user.email}
-            onChange={handleChange} // Pass the function directly
+            onChange={handleChange}
           />
           <Icon><ion-icon name="person-circle-outline"></ion-icon></Icon>
           {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
@@ -172,10 +199,10 @@ export const Login = () => {
         <InputWrapper>
           <Input
             type="password"
-            name="password" // Ensure the name attribute is set
+            name="password"
             placeholder="Password"
             value={user.password}
-            onChange={handleChange} // Pass the function directly
+            onChange={handleChange}
           />
           <Icon><ion-icon name="lock-closed-outline"></ion-icon></Icon>
           {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
