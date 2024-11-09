@@ -1,6 +1,7 @@
 
 const User=require("../models/user-models");
 const bcrypt=require("bcryptjs")
+const Feedback = require('../models/feedback-model');
 
 //defining the controller for homepage
 const home= async(req,res)=>{
@@ -90,4 +91,51 @@ const login=async(req,res)=>{
 }
 
 
-module.exports={home,register,login}
+//logic for feedback page
+const feedback = async (req, res) => {
+    try {
+        const { feedback, rating, username, email } = req.body;
+
+        // Check if the user exists with either email or username
+        const userExsist1 = await User.findOne({ email });
+        const userExsist2 = await User.findOne({ username });
+
+        console.log('Request body:', req.body);
+
+        // If neither email nor username exist, return an error
+        if (!userExsist1 && !userExsist2) {
+            return res.status(500).json({ message: "Sorry, this user does not exist" });
+        }
+
+        // Create the feedback entry in the database
+        const newFeedback = await Feedback.create({
+            username,
+            email,
+            feedback,
+            rating,
+        });
+
+        console.log('Feedback created:', newFeedback);
+        res.status(201).json({ message: 'Feedback submitted successfully!' });
+
+    } catch (err) {
+        console.error('Error submitting feedback:', err);
+        res.status(400).json({ message: 'Error submitting feedback.' });
+    }
+};
+
+  
+// authcontrollers.js
+
+const userData = async (req, res) => {
+    try {
+        const userdata=req.user;
+        return res.status(200).json({msg: userdata})
+    } 
+    catch (error) {
+        console.error('Error in userData controller:', error);
+    }
+};
+
+
+module.exports={home,register,login,feedback,userData}

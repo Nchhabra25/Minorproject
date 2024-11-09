@@ -40,6 +40,7 @@ userschema.methods.generateToken=function(){
         {
             expiresIn:"3d",
         }
+        
     )
     } catch (error) {
         console.log(error)

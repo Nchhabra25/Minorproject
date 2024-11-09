@@ -19,7 +19,7 @@ const NavBar = styled(motion.nav)`
   margin-top: 1.5rem;
   box-shadow: 0 0 10px 1px rgba(0, 0, 0, .25);
   backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.3);
+  background: #9ceef8;
   border-radius: 20px;
   padding: 10px;
   border: 1px solid rgba(255, 255, 255, .25);
@@ -29,6 +29,15 @@ const NavBar = styled(motion.nav)`
   .mobile {
     display: none;
   }
+  .desktop {
+  display: flex;
+  align-items: center;
+  }
+ 
+  .desktop .icon-container ion-icon {
+    margin-right:10px ; 
+  }
+
   @media (max-width: 500px) {
     .desktop {
       display: none;
@@ -150,12 +159,27 @@ const Btn = styled.button`
     }
   }
 `;
+const DropdownContainer = styled.div`
+  position: absolute;
+  top: 4.1rem;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  width: 150px;
+  display: ${props => (props.open ? 'block' : 'none')};
+  z-index: 10;
+`;
 
 export const Navbar = () => {
   const [click, setClick] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const { isLoggedIn, logout } = useAuth(); 
   console.log("token in navbar",isLoggedIn)
   const motionVariants=useMotion()
+  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
   return (
     <>
@@ -172,8 +196,10 @@ export const Navbar = () => {
           <MenuItem><SNavLink to="/">Home</SNavLink></MenuItem>
           {!isLoggedIn ? (
             <MenuItem><SNavLink to='./login'>Login</SNavLink></MenuItem>) 
-          :  <MenuItem><SNavLink to='/chat'>Chat</SNavLink></MenuItem>}
-          <MenuItem><SNavLink to='./resources'>Resources</SNavLink></MenuItem>
+          :  <MenuItem><SNavLink to='/chat'>Chat</SNavLink></MenuItem>
+          }
+          {!isLoggedIn? null: (<MenuItem><SNavLink to='./resources'>Resources</SNavLink></MenuItem>)}
+          {!isLoggedIn ? null: (<MenuItem><SNavLink to='./feedback'>Feedback</SNavLink></MenuItem>)}
           <MenuItem>
             <div className='mobile'>
               {isLoggedIn ? (
@@ -189,18 +215,24 @@ export const Navbar = () => {
           </MenuItem>
         </Menu>
         <div className='desktop'>
-        {
-        isLoggedIn ? (
-          <SNavLink to='./logout'>
-            <Btn>Logout</Btn>
-          </SNavLink>
+        {isLoggedIn ? (
+          <>
+            {/* <div className="icon-container" onClick={toggleDropdown}>
+              <ion-icon name="person-circle-outline" size="large"></ion-icon>
+              <DropdownContainer open={dropdownOpen}>
+                Welcome user
+              </DropdownContainer>
+            </div> */}
+            <SNavLink to='./logout'>
+              <Btn>Logout</Btn>
+            </SNavLink>
+          </>
         ) : (
           <SNavLink to='./login'>
             <Btn>Chat Now</Btn>
           </SNavLink>
-        )
-        }
-        </div>
+        )}
+      </div>
       </NavBar>
     </>
   );

@@ -104,10 +104,10 @@ export const Login = () => {
   const navigate = useNavigate();
   const { StoreToken } = useAuth();
 
-  useEffect(() => {
-    // Show a toast when the page is first loaded
-    toast.info('You can use the email Johndoe@johndoe.com and password johndoe to login', { autoClose: 10000 }); 
-  }, []);
+  // useEffect(() => {
+  //   // Show a toast when the page is first loaded
+  //   toast.info('You can use the email Johndoe@johndoe.com and password johndoe to login', { autoClose: 10000 }); 
+  // }, []);
 
   const validate = () => {
     let validationErrors = {};

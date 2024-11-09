@@ -135,7 +135,7 @@ export const Register = () => {
   });
 
   const Navigate=useNavigate();
-  const {StoreTokeninLS}= useAuth()
+  const {StoreToken}= useAuth()
 
   const [errors, setErrors] = useState({});
 
@@ -169,7 +169,7 @@ export const Register = () => {
         });
         if (response.ok) {
           const res_data = await response.json();
-          StoreTokeninLS(res_data.token);
+          StoreToken(res_data.token);
           toast.success("Account created successfully!", { position: "top-center" });
           setErrors({});
           Navigate("/login");
@@ -179,6 +179,7 @@ export const Register = () => {
           setErrors({ form: errorMsg });
         }
       } catch (error) {
+        console.log(error)
         toast.error("Network error. Please try again.", { position: "top-center" });
       }
     }

@@ -11,7 +11,7 @@ const Container=styled(motion.div)`
     margin:4rem auto;
     padding: 20px;
     border-radius: 30px;
-    background-color:  #cbc5f3;
+    background-color:  #c8c1f8;
     border-radius: 30px;
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, .25);
     display:flex;

@@ -2,19 +2,19 @@ export const CardData=[
     {
         id:1,
         review:"It's almost as if I'm talking to my therapist. At first, I couldn't believe it was a chatbot. It feels like it knows me better than I know myself sometimes.",
-        name:"User1",
+        name:"Jessics Holmes",
         date:"20 May 2024"
     },
     {
         id:2,
         review:" I have really bad social anxiety, so my therapist recommended I try out MannMitra. It helped me to manage my anxious thoughts in real-time, so I didn't have to wait until my next session to discuss them.",
-        name:"User2",
+        name:"Patrick Green",
         date:"30 May 2024"
     },
     {
         id:3,
         review:"I had difficulty finding the words to express myself to my boss and I needed quick advice, so I decided to try Elomia. Since then, I have used it for everything. It even helped me gain perspective on my relationship with my fiancé. I am so grateful for this app.",
-        name:"User3",
+        name:"Andie Anderson",
         date:"20 June 2024"
     }
 ];

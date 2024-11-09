@@ -18,7 +18,7 @@ const Card = styled(motion.div)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color:  hsla(346.85, 100%, 85.69%, 0.65);
+  background-color:  #9ceef8;
   border-radius: 30px;
   box-shadow: 0 0 10px 1px rgba(0, 0, 0, .25);
   padding: 1.5rem;
@@ -39,7 +39,7 @@ const Title = styled(motion.h3)`
   text-align: center;
   font-size: 3rem;
   text-shadow: 1px 0 0 #f0f0f0;
-  color: #5D3FD3;
+  color: #202020;
   margin-bottom: 1rem;
 `;
 

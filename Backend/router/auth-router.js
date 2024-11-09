@@ -1,6 +1,7 @@
 const express=require("express")
 const router=express.Router();
 const authcontrollers=require("../controllers/auth-controllers")
+const Authmiddleware=require("../middlewares/Auth-middleware")
 
 router.route("/").get(authcontrollers.home)
 
@@ -9,7 +10,13 @@ router.route("/register")
   .post(authcontrollers.register);
 
 router.route("/login")
-  .get((re,res)=>res.send("This is the login page"))
   .post(authcontrollers.login);
 
+  router.route("/feedback")
+    .get((req,res)=>res.send("Feedback page"))
+    .post((authcontrollers.feedback))
+
+    router.route("/userdata")
+    .get(Authmiddleware,authcontrollers.userData);
+    
 module.exports=router;

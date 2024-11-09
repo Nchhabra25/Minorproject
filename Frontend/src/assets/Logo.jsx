@@ -9,6 +9,7 @@ const LogoText = styled.span`
    color: #602aa2;
    text-shadow: 0 0 4px #fff;
    font-weight: bold;
+   cursor: pointer;
    transition: all 0.2s ease;
    position: relative;
    bottom: 10px;
@@ -16,8 +17,8 @@ const LogoText = styled.span`
        transform: scale(1.02);
    }
    @media (max-width: 450px) {
-    font-size: 2.5rem;
-    margin-top: 5px;
+    font-size: 1.5rem;
+    margin-top: 50px;
     margin-right: 2rem;
   }
 `;
@@ -37,7 +38,6 @@ const Icon = styled.span`
        color: #4ccdc3;
    }
 `;
-
 const Logo = () => {
   return (
     <>
